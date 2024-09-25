@@ -1,0 +1,26 @@
+9/24 @ 12:20 PM
+People Present: Riley, Ruben, Sam, Chris, Kaia
+Purpose: Set up team roles + split work on the Project Plan
+
+Sean was absent due to some complications with illness and communication but will be informed on what to do
+
+Sam created a GitHUb repository for the project and invited everyone present at the meeting to it
+Kaia created a shared file for the Project Plan artifact so that we could begin properly working on it
+Roles were assigned for each member:
+    Kaia Burkholder: Project Manager
+    Riley Anderson: Quality Assurance
+    Sam Kelemen: Scrum Master
+    Ruben Pino-Martinez: Technical Lead
+    Christopher Brush: UX Designer
+    Sean Crosby: Configuration Manager
+
+Parts of the Project Plan were also assigned to each present member (with it subject to change after speaking with Sean)
+    Riley: 1.1-1.4
+    Ruben: 1.5-2.3
+    Chris: 2.4-4.1
+    Sam: 4.2.1-4.2.5
+    Kaia: 4.3-5
+
+Kaia then had to leave due to needing to make it to a class
+
+Due to some parts of the plan being dependent on others, the goal was to have everything that could be donw get done by Thursday night so that the rest of the document could be finished.
