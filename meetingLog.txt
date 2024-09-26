@@ -21,6 +21,4 @@ Parts of the Project Plan were also assigned to each present member (with it sub
     Sam: 4.2.1-4.2.5
     Kaia: 4.3-5
 
-Kaia then had to leave due to needing to make it to a class
-
-Due to some parts of the plan being dependent on others, the goal was to have everything that could be donw get done by Thursday night so that the rest of the document could be finished.
+Due to some parts of the plan being dependent on others, the goal was to have everything that could be done get done by Thursday night so that the rest of the document could be finished.
