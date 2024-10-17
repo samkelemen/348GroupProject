@@ -22,3 +22,21 @@ Parts of the Project Plan were also assigned to each present member (with it sub
     Kaia: 4.3-5
 
 Due to some parts of the plan being dependent on others, the goal was to have everything that could be done get done by Thursday night so that the rest of the document could be finished.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+10/17 @ 12:00 PM
+People Present: Riley, Ruben, Sam, Chris, Kaia, Sean
+
+Created a shared requirements document for the group to work on
+
+Workload:
+	Intro: Riley
+	Overview: Sean
+	Requirements/Functional: Kaia, Sam, Ruben, Chris
+		3: Ruben + Chris
+		4: Sam + Kaia
+
+Riley left to go to her lab in the middle
+Chris and Sam showed up later, assignments were told to them.
