@@ -58,7 +58,7 @@ void Parser::split_input(Node* root)
             //if a closing bracket was not found, raises error
             if (closing_index == -1)
             {
-                cout << "A closing bracket was not found";
+                throw runtime_error("A closing bracket is missing from the equation");
             }
             //removes excess brackets, continues search at the new beginning of the expression
             else if ((closing_index == expression.length() - 1) && (index == 0))
@@ -73,10 +73,12 @@ void Parser::split_input(Node* root)
             }
                     
         }
-        else if((expression[index] == '^') && (priority <= 1))
+        else if((expression[index] == '*') && (expression[index+1] == '*') && (priority <= 1))
         {
             priority = 1;
             operate_split = index;
+            //moves an extra index since exponentiation is 2 characters
+            index++;
         }
         else if((expression[index] == '*' || expression[index] == '/') && (priority <= 2))
         {
@@ -91,7 +93,7 @@ void Parser::split_input(Node* root)
         //catches extra closing brackets, gives error
         else if (expression[index] == ')')
         {
-            cout << "No opening bracket to match the closing one";
+            throw runtime_error("An opening bracket is missing from the equation");
         }
         index++;
 
@@ -103,7 +105,14 @@ void Parser::split_input(Node* root)
         root->left = l;
         r->value = expression.substr(operate_split + 1, expression.length() - (operate_split + 1));
         root->right = r;
-        root->operate = expression[operate_split];
+        if (expression[operate_split+1] != '*')
+        {
+            root->operate = expression[operate_split];
+        }
+        else
+        {
+            root->operate = "**";
+        }
     }
             
 }
@@ -131,4 +140,9 @@ Node* Parser::create_tree(string expression)
     create_tree_recursive(root);
 
     return root;
+}
+
+int main()
+{
+    cout << "Running";
 }
