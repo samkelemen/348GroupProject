@@ -119,16 +119,20 @@ void Parser::split_input(Node* root)
     //adds left + right nodes if the expression is to be split
     if (operate_split != -1)
     {
-        l->value = expression.substr(0, operate_split);
-        root->left = l;
-        r->value = expression.substr(operate_split + 1, expression.length() - (operate_split + 1));
-        root->right = r;
         if (expression[operate_split+1] != '*')
         {
             root->operate = expression[operate_split];
+            l->value = expression.substr(0, operate_split);
+            root->left = l;
+            r->value = expression.substr(operate_split + 1, expression.length() - (operate_split + 1));
+            root->right = r;
         }
         else
         {
+            l->value = expression.substr(0, operate_split);
+            root->left = l;
+            r->value = expression.substr(operate_split + 2, expression.length() - (operate_split + 1));
+            root->right = r;
             root->operate = "**";
         }
     }
@@ -138,7 +142,7 @@ void Parser::split_input(Node* root)
 //recursively splits the root into two nodes, then moves to both of the nodes until they can no longer be split
 void Parser::create_tree_recursive(Node* root)
 {
-    cout << root->value << "\n";
+    //cout << root->value << "\n";
     split_input(root);
 
     if (root->left != NULL)
