@@ -4,6 +4,24 @@
 #include "parser.hpp"
 using namespace std;
 
+
+/*
+The parser splits each value from the lowest-priority operation farthest to the left
+Eache node has 4 things: the base equation(value), a left and right (which each have part of the equation), 
+    and an operation that is supposed to be done between the two halves
+
+These will split until there are not more operators(there is inly a number remining in the node value), creating a binary tree
+
+The idea is that the calculator will start from the bottome left and move up, calculating each node until the root is finally calculated
+
+
+Ex:              (x+4)-4*7
+              |             |
+            (x+4)    -     4*7
+          |       |     |       |
+          x   +   4     4   *   7
+
+*/
 void Parser::split_input(Node* root)
 {
     //initializes nodes for current split
