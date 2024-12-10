@@ -2,17 +2,19 @@
  *
 */
 
-#include "user_interface.h"
+#include "user_interface.hpp"
 #include "node.hpp"
 #include "parser.hpp"
+#include "calculator.hpp"
 using std::string;
-
 
 int main() {
     while (true) {
-        string input = input();
-        Node* compute_tree = Parser::create_tree(string expression);
-        // float result = calculator(compute_graph);
-        // output_result(result);
+        string inputExpression = input();
+        Parser parser;
+        Node* computeTree = parser.create_tree(inputExpression);
+        float result = Calculator::calculate(computeTree);
+        output_result(std::to_string(result));
+        
     }
 }
