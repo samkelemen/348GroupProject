@@ -141,8 +141,3 @@ Node* Parser::create_tree(string expression)
 
     return root;
 }
-
-int main()
-{
-    cout << "Running";
-}
