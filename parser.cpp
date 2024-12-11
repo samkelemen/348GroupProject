@@ -140,20 +140,20 @@ string Parser::split_input(Node* root)
         {
             root->operate = expression[operate_split];
             l->value = expression.substr(0, operate_split);
-            cout << "left: " << l->value << "\n";
+            //cout << "left: " << l->value << "\n";
             root->left = l;
             r->value = expression.substr(operate_split + 1, expression.length() - (operate_split + 1));
-            cout << "right: " << r->value << "\n";
+            //cout << "right: " << r->value << "\n";
             root->right = r;
         }
         else
         {
             root->operate = "**";
             l->value = expression.substr(0, operate_split);
-            cout << "left: " << l->value << "\n";
+            //cout << "left: " << l->value << "\n";
             root->left = l;
             r->value = expression.substr(operate_split + 2, expression.length() - (operate_split + 1));
-            cout << "right: " << r->value << "\n";
+            //cout << "right: " << r->value << "\n";
             root->right = r;
             
         }
