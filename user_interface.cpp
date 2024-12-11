@@ -46,7 +46,7 @@ bool validate_input(string input) {
 // Ask the user for an expression to evaluate and return it as a string,
 // with spaces removed.
 string input() {
-    cout << "Enter the expression you would like to evaluate: ";
+    cout << endl << "Enter the expression you would like to evaluate: ";
     string expression;
     getline(cin, expression);
     remove_spaces(expression);
