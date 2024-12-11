@@ -13,7 +13,7 @@ using namespace std;
 
 // Takes in a string and removes all spaces, manipulating
 // the string in place.
-void remove_spaces(string str) {
+void remove_spaces(string& str) {
     for (int i = 0; i < str.length(); i++) {
         if (str[i] == ' ') {
             str.erase(i, 1);
@@ -48,7 +48,8 @@ bool validate_input(string input) {
 string input() {
     cout << "Enter the expression you would like to evaluate: ";
     string expression;
-    std::getline(cin, expression);
+    getline(cin, expression);
+    remove_spaces(expression);
     return expression;
 }
 
