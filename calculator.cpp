@@ -1,7 +1,7 @@
 #include "calculator.hpp"
 #include <stdexcept>
 #include <cmath>
-#include <iostream>
+
 
 float Calculator::calculate(Node* root) {
     if (!root) {
@@ -10,7 +10,6 @@ float Calculator::calculate(Node* root) {
 
     //Leaf node (will be a number)
     if (!root->left && !root->right) {
-        std::cout << root->value;
         return std::stof(root->value);
     }
 
