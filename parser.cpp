@@ -22,7 +22,7 @@ Ex:              (x+4)-4*7
           x   +   4     4   *   7
 
 */
-void Parser::split_input(Node* root)
+string Parser::split_input(Node* root)
 {
     //initializes nodes for current split
     Node* l = new Node;
@@ -76,7 +76,7 @@ void Parser::split_input(Node* root)
             //if a closing bracket was not found, raises error
             if (closing_index == -1)
             {
-                throw runtime_error("A closing bracket is missing from the equation");
+                return "A closing bracket is missing from the equation";
             }
             //removes excess brackets, continues search at the new beginning of the expression
             else if ((closing_index == expression.length() - 1) && (index == 0))
@@ -108,13 +108,16 @@ void Parser::split_input(Node* root)
         //catches extra closing brackets, gives error
         else if (expression[index] == ')')
         {
-            throw runtime_error("An opening bracket is missing from the equation");
+            return "An opening bracket is missing from the equation";
         }
 
         if((expression[index] == '*' || expression[index] == '/') && (priority <= 2))
         {
             if (expression[index-1] != '*')
-            {
+            {   
+                if (index + 1 < expression.length() && expression[index+1] == '/' && expression[index + 1] == '0') {
+                    return "Division by 0.";
+                }
                 priority = 2;
                 operate_split = index;
             }
@@ -154,13 +157,18 @@ void Parser::split_input(Node* root)
             
         }
     }
-            
+    // Return empty string to indicate no error
+    return "";      
 }
 
 //recursively splits the root into two nodes, then moves to both of the nodes until they can no longer be split
-void Parser::create_tree_recursive(Node* root)
+string Parser::create_tree_recursive(Node* root)
 {
-    split_input(root);
+    string error_message = split_input(root);
+
+    if (error_message != "") {
+        return error_message;
+    }
 
     if (root->left != NULL)
     {
@@ -170,13 +178,14 @@ void Parser::create_tree_recursive(Node* root)
     {
         create_tree_recursive(root->right);
     }
+    return "";
 }
 //starts the recursive loop at the root(expression given)
-Node* Parser::create_tree(string expression)
+tuple<Node*, string> Parser::create_tree(string expression)
 {
     Node* root = new Node;
     root->value = expression;
-    create_tree_recursive(root);
+    string error_message = create_tree_recursive(root);
 
-    return root;
+    return make_tuple(root, error_message);
 }
