@@ -30,15 +30,15 @@ int main() {
         }
 
         // Handle any unexpected invalid inputs. 
-        //try {
+        try {
             // Calculate the result and output it.
             float result = Calculator::calculate(computeTree);
             output_result(std::to_string(result));
-        //}
-        /*
+        }
         catch (const std::exception& e) {
             output_error("Invalid expression.");
             continue;
-        }*/
+        }
     }
 }
+
