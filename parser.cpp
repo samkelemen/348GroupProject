@@ -22,14 +22,14 @@ Ex:              (x+4)-4*7
           x   +   4     4   *   7
 
 */
-void Parser::split_input(Node* root)
+string Parser::split_input(Node* root)
 {
-    //initializes nodes for current split
+    // Initializes nodes for current split
     Node* l = new Node;
     Node* r = new Node;
     string expression = root->value;
     int operate_split = -1;
-    //tracks the highest level of priority found (expression is seperated by the lowest priority operator) 1==exponent, 2==mult/division, 3==addition/subtraction
+    // Tracks the highest level of priority found (expression is seperated by the lowest priority operator) 1==exponent, 2==mult/division, 3==addition/subtraction
     int priority = 0;
 
     int index = 0;
@@ -41,15 +41,15 @@ void Parser::split_input(Node* root)
             int search_index = index;
             while (search_index < expression.length())
             {
-                //find farthest ')' character, which should pair with the '(' character
+                // Find farthest ')' character, which should pair with the '(' character
                 if (expression[search_index] == ')')
                 {
                     closing_index = search_index;
                 }
-                //finds a closing after the furthest bracket, ends search
+                // Finds a closing after the furthest bracket, ends search
                 else if ((expression[search_index] == '(') && (search_index > closing_index) && (closing_index != -1))
                 {
-                    //track # of closing brackets and opening ones, only skips when the two match
+                    // Track # of closing brackets and opening ones, only skips when the two match
                     int closing_num = 0;
                     int opening_num = 0;
                     int temp_search = search_index;
@@ -65,7 +65,7 @@ void Parser::split_input(Node* root)
                         }
                         temp_search++;
                     }
-                    //skip the rest of the search
+                    // Skip the rest of the search
                     if (closing_num == opening_num)
                     {
                         search_index = expression.length();
@@ -73,18 +73,18 @@ void Parser::split_input(Node* root)
                 }
                 search_index++;
             }
-            //if a closing bracket was not found, raises error
+            // If a closing bracket was not found, raises error
             if (closing_index == -1)
             {
-                throw runtime_error("A closing bracket is missing from the equation");
+                return "A closing bracket is missing from the equation";
             }
-            //removes excess brackets, continues search at the new beginning of the expression
+            // Removes excess brackets, continues search at the new beginning of the expression
             else if ((closing_index == expression.length() - 1) && (index == 0))
             {
                 expression = expression.substr(1,expression.length() - 2);
                 index = -1;
             }
-            //moves index past terms in set of paranthesis
+            // Moves index past terms in set of paranthesis
             else
             {
                 index = closing_index;
@@ -95,7 +95,7 @@ void Parser::split_input(Node* root)
         {
             priority = 1;
             operate_split = index;
-            //moves an extra index since exponentiation is 2 characters
+            // Moves an extra index since exponentiation is 2 characters
             index++;
         }
         else if((expression[index] == '*' || expression[index] == '/') && (priority <= 2))
@@ -108,15 +108,15 @@ void Parser::split_input(Node* root)
             priority = 3;
             operate_split = index;
         }
-        //catches extra closing brackets, gives error
+        // Catches extra closing brackets, gives error
         else if (expression[index] == ')')
         {
-            throw runtime_error("An opening bracket is missing from the equation");
+            return "An opening bracket is missing from the equation";
         }
         index++;
 
     }
-    //adds left + right nodes if the expression is to be split
+    // Adds left + right nodes if the expression is to be split
     if (operate_split != -1)
     {
         if (expression[operate_split+1] != '*')
@@ -136,14 +136,21 @@ void Parser::split_input(Node* root)
             root->operate = "**";
         }
     }
+    // Return an empty strin to indicate the function ran successfully
+    return "";
             
 }
 
-//recursively splits the root into two nodes, then moves to both of the nodes until they can no longer be split
-void Parser::create_tree_recursive(Node* root)
+// Recursively splits the root into two nodes, then moves to both of the nodes until they can no longer be split
+string Parser::create_tree_recursive(Node* root)
 {
-    //cout << root->value << "\n";
-    split_input(root);
+    // Uncomment for testing: 
+    // cout << root->value << "\n";
+    string error_message = split_input(root);
+
+    if (error_message != "") {
+        return error_message;
+    }
 
     if (root->left != NULL)
     {
@@ -154,12 +161,12 @@ void Parser::create_tree_recursive(Node* root)
         create_tree_recursive(root->right);
     }
 }
-//starts the recursive loop at the root(expression given)
-Node* Parser::create_tree(string expression)
+// Starts the recursive loop at the root(expression given)
+tuple<Node*, string> Parser::create_tree(string expression)
 {
     Node* root = new Node;
     root->value = expression;
-    create_tree_recursive(root);
+    string error_message = create_tree_recursive(root);
 
-    return root;
+    return make_tuple(root, error_message);
 }

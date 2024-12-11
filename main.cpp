@@ -11,13 +11,27 @@ int main() {
 
         // Validate the input has no invalid characters.
         if (!validate_input(input_expression)) {
-            cout << "Please try again. Invalid characters in expression." << endl;
+            output_error("Invalid characters in expression.");
             continue;
         }
 
-        // Create a parser object and create the computation tree.
-        Parser parser;
-        Node* computeTree = parser.create_tree(input_expression);
+        Node* computeTree;
+        string error_message;
+
+        try {
+            // Create a parser object and create the computation tree.
+            Parser parser;
+            tie(computeTree, error_message) = parser.create_tree(input_expression);
+        }
+        catch (const std::exception& e) {
+            output_error("Invalid expression.");
+            continue;
+        }
+
+        if (error_message != "") {
+            output_error(error_message);
+            continue;
+        }
 
         // Calculate the result and output it.
         float result = Calculator::calculate(computeTree);

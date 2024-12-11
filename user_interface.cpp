@@ -59,3 +59,8 @@ void output_result(string result) {
     cout << setprecision(2);
     cout << result << "\n";
 }
+
+// Outputs the error message passed in.
+void output_error(string error_message) {
+    cout << "Error: " << error_message << "\n\n";
+}
