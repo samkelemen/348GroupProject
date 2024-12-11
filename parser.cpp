@@ -105,21 +105,27 @@ void Parser::split_input(Node* root)
             }
             
         }
-        else if((expression[index] == '*' || expression[index] == '/') && (priority <= 2))
+        //catches extra closing brackets, gives error
+        else if (expression[index] == ')')
         {
-            priority = 2;
-            operate_split = index;
+            throw runtime_error("An opening bracket is missing from the equation");
+        }
+
+        if((expression[index] == '*' || expression[index] == '/') && (priority <= 2))
+        {
+            if (expression[index-1] != '*')
+            {
+                priority = 2;
+                operate_split = index;
+            }
+            
         }
         else if((expression[index] == '+' || expression[index] == '-') && (priority <= 3))
         {
             priority = 3;
             operate_split = index;
         }
-        //catches extra closing brackets, gives error
-        else if (expression[index] == ')')
-        {
-            throw runtime_error("An opening bracket is missing from the equation");
-        }
+        
         index++;
 
     }
@@ -130,18 +136,20 @@ void Parser::split_input(Node* root)
         {
             root->operate = expression[operate_split];
             l->value = expression.substr(0, operate_split);
+            cout << "left: " << l->value << "\n";
             root->left = l;
-            //cout << root->operate << "\n";
             r->value = expression.substr(operate_split + 1, expression.length() - (operate_split + 1));
+            cout << "right: " << r->value << "\n";
             root->right = r;
         }
         else
         {
             root->operate = "**";
             l->value = expression.substr(0, operate_split);
+            cout << "left: " << l->value << "\n";
             root->left = l;
-            //cout << root->operate << "\n";
             r->value = expression.substr(operate_split + 2, expression.length() - (operate_split + 1));
+            cout << "right: " << r->value << "\n";
             root->right = r;
             
         }
@@ -152,7 +160,6 @@ void Parser::split_input(Node* root)
 //recursively splits the root into two nodes, then moves to both of the nodes until they can no longer be split
 void Parser::create_tree_recursive(Node* root)
 {
-    cout << root->value << "\n";
     split_input(root);
 
     if (root->left != NULL)
