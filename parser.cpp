@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <tuple>
 #include "node.hpp"
 #include "parser.hpp"
 using namespace std;
@@ -98,8 +99,13 @@ string Parser::split_input(Node* root)
             // Moves an extra index since exponentiation is 2 characters
             index++;
         }
-        else if((expression[index] == '*' || expression[index] == '/') && (priority <= 2))
-        {
+        else if ((expression[index] == '*' || expression[index] == '/') && (priority <= 2))
+        {   
+            // Handle divide by zero 
+            if (index < expression.size() - 1 && expression[index] == '/' && expression[index + 1] == '0') {
+                return "Divide by zero.";
+            }
+
             priority = 2;
             operate_split = index;
         }

@@ -1,3 +1,5 @@
+#include <tuple>
+#include <string>
 #include "user_interface.hpp"
 #include "node.hpp"
 #include "parser.hpp"
@@ -15,27 +17,28 @@ int main() {
             continue;
         }
 
+        // Create a parser object and create the computation tree.
         Node* computeTree;
         string error_message;
+        Parser parser;
+        tie(computeTree, error_message) = parser.create_tree(input_expression);
 
-        try {
-            // Create a parser object and create the computation tree.
-            Parser parser;
-            tie(computeTree, error_message) = parser.create_tree(input_expression);
-        }
-        catch (const std::exception& e) {
-            output_error("Invalid expression.");
-            continue;
-        }
-
+        // Explicitly handle common invalid inputs. 
         if (error_message != "") {
             output_error(error_message);
             continue;
         }
 
-        // Calculate the result and output it.
-        float result = Calculator::calculate(computeTree);
-        output_result(std::to_string(result));
-        
+        // Handle any unexpected invalid inputs. 
+        //try {
+            // Calculate the result and output it.
+            float result = Calculator::calculate(computeTree);
+            output_result(std::to_string(result));
+        //}
+        /*
+        catch (const std::exception& e) {
+            output_error("Invalid expression.");
+            continue;
+        }*/
     }
 }
