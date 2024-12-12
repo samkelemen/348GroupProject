@@ -92,31 +92,24 @@ string Parser::split_input(Node* root)
             }
                     
         }
-        else if((expression[index] == '*') && (priority <= 1))
+        //checks for exponent
+        else if(( index < expression.length()-1 && expression[index] == '*' && expression[index+1] == '*') && (priority <= 1))
         {
-            if (index < expression.length()-1)
-            {
-                if (expression[index+1] == '*')
-                {
-                    priority = 1;
-                    operate_split = index;
-                    //moves an extra index since exponentiation is 2 characters
-                    index++;
-                }
-            }
-            
+            priority = 1;
+            operate_split = index;
+            //moves an extra index since exponentiation is 2 characters
+            index++;
         }
         //catches extra closing brackets, gives error
         else if (expression[index] == ')')
         {
             return "An opening bracket is missing from the equation";
         }
-
-        if((expression[index] == '*' || expression[index] == '/') && (priority <= 2))
+        else if((expression[index] == '*' || expression[index] == '/' || expression[index] == '%') && (priority <= 2))
         {
-            if (expression[index-1] != '*')
+            if (expression[index-1] != '*' && expression[index+1] != '*')
             {   
-                if (index + 1 < expression.length() && expression[index + 1] == '0') {
+                if (index + 1 < expression.length() && (expression[index+1] == '/' || expression[index+1] == '%') && expression[index + 1] == '0') {
                     return "Division by 0.";
                 }
                 priority = 2;
@@ -126,8 +119,12 @@ string Parser::split_input(Node* root)
         }
         else if((expression[index] == '+' || expression[index] == '-') && (priority <= 3))
         {
-            priority = 3;
-            operate_split = index;
+            if (index - 1 != operate_split && index != 0)
+            {
+                priority = 3;
+                operate_split = index;
+            }
+            
         }
         
         index++;
@@ -140,24 +137,56 @@ string Parser::split_input(Node* root)
         {
             root->operate = expression[operate_split];
             l->value = expression.substr(0, operate_split);
-            //cout << "left: " << l->value << "\n";
+            cout << "left: " << l->value << "\n";
             root->left = l;
             r->value = expression.substr(operate_split + 1, expression.length() - (operate_split + 1));
-            //cout << "right: " << r->value << "\n";
+            cout << "right: " << r->value << "\n";
             root->right = r;
         }
         else
         {
             root->operate = "**";
             l->value = expression.substr(0, operate_split);
-            //cout << "left: " << l->value << "\n";
+            cout << "left: " << l->value << "\n";
             root->left = l;
             r->value = expression.substr(operate_split + 2, expression.length() - (operate_split + 1));
-            //cout << "right: " << r->value << "\n";
+            cout << "right: " << r->value << "\n";
             root->right = r;
             
         }
     }
+    else 
+    {
+        if (expression.find('(') == 1 && (expression[0] == '-' || expression[0] == '+'))
+        {
+            int last_closed_parenthesis = -1;
+            cout<< "neg sign\n";
+            root->operate = "*";
+            if (expression[0] == '-')
+            {
+                l->value = "-1";
+                root->left = l;
+            }
+            else
+            {
+                l->value = "1";
+                root->left = l;
+            }
+
+            for (int i = 1; i < expression.length();i++)
+            {
+                if (expression[i] == ')') {
+                    last_closed_parenthesis = i;
+                }
+            }
+
+            cout << expression.substr(2,last_closed_parenthesis - 2) << "\n";
+            r->value = expression.substr(2,last_closed_parenthesis - 2);
+            root->right = r;
+        }
+    }
+    //Changes root to verson w/parenthesis removed
+    root->value = expression;
     // Return empty string to indicate no error
     return "";      
 }

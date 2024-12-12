@@ -29,6 +29,13 @@ float Calculator::calculate(Node* root) {
             throw std::runtime_error("Division by zero.");
         }
         return leftValue / rightValue;
+    } else if (root->operate == "%") {
+        if (rightValue == 0) {
+            throw std::runtime_error("Division by zero.");
+        }
+        int l = leftValue;
+        int r = rightValue;
+        return l % r;
     } else if (root->operate == "**") {
         return std::pow(leftValue, rightValue);
     } else {
