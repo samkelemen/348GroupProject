@@ -109,7 +109,7 @@ string Parser::split_input(Node* root)
         {
             if (expression[index-1] != '*' && expression[index+1] != '*')
             {   
-                if (index + 1 < expression.length() && (expression[index+1] == '/' || expression[index+1] == '%') && expression[index + 1] == '0') {
+                if (index + 1 < expression.length() && (expression[index] == '/' || expression[index] == '%') && expression[index + 1] == '0') {
                     return "Division by 0.";
                 }
                 priority = 2;
