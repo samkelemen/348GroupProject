@@ -24,7 +24,7 @@ void remove_spaces(string& str) {
 
 // Validates that the input is a valid operator
 bool is_operator(char input) {
-    if (input == '+' || input == '-' || input == '*' || input == '/' || input == '(' || input == ')') {
+    if (input == '+' || input == '-' || input == '*' || input == '/' || input == '(' || input == ')' || input == '%') {
         return true;
     } else {
         return false;
