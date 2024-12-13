@@ -137,20 +137,20 @@ string Parser::split_input(Node* root)
         {
             root->operate = expression[operate_split];
             l->value = expression.substr(0, operate_split);
-            cout << "left: " << l->value << "\n";
+            //cout << "left: " << l->value << "\n";
             root->left = l;
             r->value = expression.substr(operate_split + 1, expression.length() - (operate_split + 1));
-            cout << "right: " << r->value << "\n";
+            //cout << "right: " << r->value << "\n";
             root->right = r;
         }
         else
         {
             root->operate = "**";
             l->value = expression.substr(0, operate_split);
-            cout << "left: " << l->value << "\n";
+            //cout << "left: " << l->value << "\n";
             root->left = l;
             r->value = expression.substr(operate_split + 2, expression.length() - (operate_split + 1));
-            cout << "right: " << r->value << "\n";
+            //cout << "right: " << r->value << "\n";
             root->right = r;
             
         }
@@ -160,7 +160,7 @@ string Parser::split_input(Node* root)
         if (expression.find('(') == 1 && (expression[0] == '-' || expression[0] == '+'))
         {
             int last_closed_parenthesis = -1;
-            cout<< "neg sign\n";
+            //cout<< "neg sign\n";
             root->operate = "*";
             if (expression[0] == '-')
             {
@@ -180,7 +180,7 @@ string Parser::split_input(Node* root)
                 }
             }
 
-            cout << expression.substr(2,last_closed_parenthesis - 2) << "\n";
+            //cout << expression.substr(2,last_closed_parenthesis - 2) << "\n";
             r->value = expression.substr(2,last_closed_parenthesis - 2);
             root->right = r;
         }
